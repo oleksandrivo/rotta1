@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar</title>
+    <style>
+        body {
+            background-color: #1956b4;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #1956b4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 300px;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background: white;
+            color: #1956b4;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Agendar</h1>
+        <form onsubmit="salvarAgendamento(event)">
+            <label for="embarque">Local de Embarque:</label>
+            <input type="text" id="embarque" required>
+            
+            <label for="desembarque">Local de Desembarque:</label>
+            <input type="text" id="desembarque" required>
+            
+            <label for="data">Data do Agendamento:</label>
+            <input type="date" id="data" required>
+            
+            <label for="hora">Hora do Agendamento:</label>
+            <input type="time" id="hora" required>
+            
+            <button type="submit">Agendar</button>
+        </form>
+        <a href="dashboard.html" style="color: white;">Voltar ao Dashboard</a>
+    </div>
+
+    <script>
+        function salvarAgendamento(event) {
+            event.preventDefault();
+            
+            let agendamento = {
+                embarque: document.getElementById("embarque").value,
+                desembarque: document.getElementById("desembarque").value,
+                data: document.getElementById("data").value,
+                hora: document.getElementById("hora").value
+            };
+
+            let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+            agendamentos.push(agendamento);
+            localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+
+            window.location.href = "agendados.html"; // Redireciona para a página de agendados
+        }
+    </script>
+</body>
+</html>

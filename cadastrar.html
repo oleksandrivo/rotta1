@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <style>
+        body {
+            background-color: #1956b4; /* Azul petróleo */
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #1956b4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 300px;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background: white;
+            color: #1956b4;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #ddd;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro</h2>
+        <form onsubmit="cadastrar(event)">
+            <label for="usuario">Usuário:</label>
+            <input type="text" id="usuario" required>
+            
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" required>
+            
+            <button type="submit">Cadastrar</button>
+        </form>
+        <a href="login.html">Já tem uma conta? Faça login</a>
+    </div>
+
+    <script>
+        function cadastrar(event) {
+            event.preventDefault();
+
+            let usuario = document.getElementById("usuario").value;
+            let senha = document.getElementById("senha").value;
+
+            let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+            let usuarioExistente = usuarios.find(u => u.usuario === usuario);
+            if (usuarioExistente) {
+                alert("Usuário já cadastrado! Tente outro nome.");
+                return;
+            }
+
+            usuarios.push({ usuario, senha });
+            localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+            alert("Cadastro realizado com sucesso! Faça login.");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

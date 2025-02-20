@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendados</title>
+    <style>
+        body {
+            background-color: #1956b4; /* Azul petróleo */
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background: #1956b4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: white;
+            color: #1956b4;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: darkred;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            margin-top: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Agendamentos</h2>
+        <ul id="listaAgendamentos"></ul>
+        <a href="dashboard.html">Voltar ao Dashboard</a>
+    </div>
+
+    <script>
+        function carregarAgendamentos() {
+            let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+            let lista = document.getElementById("listaAgendamentos");
+            lista.innerHTML = "";
+
+            if (agendamentos.length === 0) {
+                lista.innerHTML = "<p>Nenhum agendamento encontrado.</p>";
+                return;
+            }
+
+            agendamentos.forEach((agendamento, index) => {
+                let item = document.createElement("li");
+                item.innerHTML = `${agendamento.embarque} → ${agendamento.desembarque} (${agendamento.data} às ${agendamento.hora}) 
+                    <button onclick="excluirAgendamento(${index})">X</button>`;
+                lista.appendChild(item);
+            });
+        }
+
+        function excluirAgendamento(index) {
+            let agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+            agendamentos.splice(index, 1);
+            localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
+            carregarAgendamentos();
+        }
+
+        window.onload = carregarAgendamentos;
+    </script>
+</body>
+</html>
+
+
